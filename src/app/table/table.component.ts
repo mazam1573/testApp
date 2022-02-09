@@ -21,7 +21,7 @@ export class TableComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['Sr#', 'Title', 'Description', 'User ID'];
   dataSource = new MatTableDataSource<UserData[]>();
   showLoader: boolean = true;
-  @ViewChild('paginator') paginator!: MatPaginator;
+  @ViewChild('paginator') paginator: MatPaginator;
 
   constructor(private apiService: ApiService) { }
 
@@ -30,11 +30,12 @@ export class TableComponent implements OnInit, AfterViewInit {
       this.dataSource = new MatTableDataSource(Object.values(res));
       if (this.dataSource.data) {
         this.showLoader = false;
+        this.dataSource.paginator = this.paginator;
       }
     })
+
   }
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
   }
 
 }
